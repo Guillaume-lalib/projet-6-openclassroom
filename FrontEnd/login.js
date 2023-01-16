@@ -15,7 +15,6 @@ form.addEventListener("submit", function (connect) {
     });
     const resLogin = await urlLogin;
     const dataLogin = await resLogin.json();
-
     if (dataLogin.userId == 1) {
       localStorage.setItem("token", dataLogin.token);
       location.href = "./index.html";

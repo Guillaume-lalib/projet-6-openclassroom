@@ -29,14 +29,23 @@ const createFilter = (div, classAdd = [], content) => {
 };
 
 const button = createFilter("button", ["filter"], "Tous");
+//------------------filter sort------------------//
 
 //------------------work returns------------------//
 
-fetch("http://localhost:5678/api/works")
-  .then((resWork) => resWork.json())
-  .then((resWork) => {
-    console.log(resWork);
+const dataWorks = async () => {
+  const urlWorks = `http://localhost:5678/api/works`;
+  const resWorks = await fetch(urlWorks);
+  const dataWorks = await resWorks.json();
+  dataWorks.forEach((image) => {
+    const template = `<figure>
+            <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />
+            <figcaption>${image.title}</figcaption>
+          </figure>`;
+    gallery.innerHTML += template;
   });
+};
+dataWorks();
 
 //------------------filtre send------------------//
 

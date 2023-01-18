@@ -17,6 +17,7 @@ form.addEventListener("submit", function (connect) {
     const dataLogin = await resLogin.json();
     if (dataLogin.userId == 1) {
       localStorage.setItem("token", dataLogin.token);
+      localStorage.setItem("id", dataLogin.userId);
       location.href = "./index.html";
     } else {
       email.value = null;

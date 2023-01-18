@@ -29,7 +29,6 @@ const createFilter = (div, classAdd = [], content) => {
 };
 
 const button = createFilter("button", ["filter"], "Tous");
-//------------------filter sort------------------//
 
 //------------------work returns------------------//
 
@@ -46,6 +45,17 @@ const dataWorks = async () => {
   });
 };
 dataWorks();
+//------------------filter sort------------------//
+
+// const filtreSort = () => {
+//   let filterList = document.querySelectorAll(".allFilter");
+//   filterList.forEach((filter, index) => {
+//     filter.addEventListener("click", function () {
+//       let imageSort = document.querySelectorAll(".");
+//     });
+//   });
+// };
+// filtreSort();
 
 //------------------filtre send------------------//
 

@@ -1,7 +1,7 @@
 const validate = document.getElementById("sendMessage");
 validate.addEventListener("click", () => alert("Message envoyer"));
 
-//------------------filtre------------------//
+//------------------filtre + sort------------------//
 
 const portfolio = document.querySelector("#portfolio");
 const gallery = document.querySelector(".gallery");
@@ -26,8 +26,20 @@ const createFilter = (div, classAdd = [], content) => {
   });
   filter.textContent = content;
   divFilter.append(filter);
+  //------------------sort------------------//
+  const filterList = document.querySelectorAll(".filter");
+  filterList.forEach((filterCategory, index) => {
+    filterCategory.addEventListener("click", function () {
+      let imageSort = document.querySelectorAll(".imageCard");
+      for (let imageCard of imageSort) {
+        imageCard.style.display = "none";
+        if (index === 0 || index == imageCard.dataset.category) {
+          imageCard.style.display = "block";
+        }
+      }
+    });
+  });
 };
-
 const button = createFilter("button", ["filter"], "Tous");
 
 //------------------work returns------------------//
@@ -37,25 +49,14 @@ const dataWorks = async () => {
   const resWorks = await fetch(urlWorks);
   const dataWorks = await resWorks.json();
   dataWorks.forEach((image) => {
-    const template = `<figure>
-            <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />
-            <figcaption>${image.title}</figcaption>
-          </figure>`;
+    const template = `<figure class="imageCard" data-category="${image.categoryId}">
+    <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />
+    <figcaption>${image.title}</figcaption>
+    </figure>`;
     gallery.innerHTML += template;
   });
 };
 dataWorks();
-//------------------filter sort------------------//
-
-// const filtreSort = () => {
-//   let filterList = document.querySelectorAll(".allFilter");
-//   filterList.forEach((filter, index) => {
-//     filter.addEventListener("click", function () {
-//       let imageSort = document.querySelectorAll(".");
-//     });
-//   });
-// };
-// filtreSort();
 
 //------------------filtre send------------------//
 

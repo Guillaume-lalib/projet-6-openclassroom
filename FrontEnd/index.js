@@ -1,3 +1,5 @@
+//------------------send confirm------------------//
+
 const validate = document.getElementById("sendMessage");
 validate.addEventListener("click", () => alert("Message envoyer"));
 
@@ -58,6 +60,27 @@ const dataWorks = async () => {
 };
 dataWorks();
 
-//------------------filtre send------------------//
+//------------------amdmin connect------------------//
 
-//------------------filtre delete------------------//
+const logOut = document.querySelector(".login");
+const userEdition = async () => {
+  const classLogOff = document.querySelectorAll(".logOff");
+  const classFilter = document.querySelector(".allFilter");
+  const h2Project = document.getElementById("project");
+  const logOn = localStorage.getItem("id");
+  if (logOn == 1) {
+    h2Project.style.marginBottom = "100px";
+    logOut.innerHTML = `<a href="#">Logout</a>`;
+    classLogOff.forEach((el) => {
+      el.classList.remove("logOff");
+    });
+    classFilter.style.display = "none";
+  }
+};
+userEdition();
+//------------------log out------------------//
+logOut.addEventListener("click", () => {
+  localStorage.setItem("id", "token");
+  localStorage.clear();
+  window.location.reload();
+});

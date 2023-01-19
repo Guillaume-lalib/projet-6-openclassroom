@@ -21,18 +21,18 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-    <!-- <div class="edition">
-      <i class="fa-regular fa-pen-to-square"></i> Mode édition<button>
+    <div class="edition logOff">
+      <i class="fa-regular fa-pen-to-square lofOff"></i> Mode édition<button>
         Publier les changements
       </button>
-    </div> -->
+    </div>
     <header>
       <h1>Sophie Bluel<span>Architecte d'inteérieur</span></h1>
       <nav>
         <ul>
           <li><a href="#project">Projets</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="./login.html">Login</a></li>
+          <li><a class="login" href="./login.html">Login</a></li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -41,12 +41,18 @@
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
+          <figcaption class="figModif">
+            <span
+              ><i class="fa-regular fa-pen-to-square logOff"></i
+              ><span class="modif logOff">Modifier</span></span
+            >
+          </figcaption>
         </figure>
         <article>
-          <!-- <span
-            ><i class="fa-regular fa-pen-to-square"></i
-            ><span class="modif">Modifier</span></span
-          > -->
+          <span
+            ><i class="fa-regular fa-pen-to-square logOff"></i
+            ><span class="modif logOff">Modifier</span></span
+          >
           <h2>Designer d'espace</h2>
           <p>
             Je raconte votre histoire, je valorise vos idées. Je vous accompagne
@@ -68,10 +74,10 @@
       <section id="portfolio">
         <h2 id="project">
           Mes Projets
-          <!-- <span
-            ><i class="fa-regular fa-pen-to-square"></i
-            ><span class="modif">Modifier</span></span
-          > -->
+          <span
+            ><i class="fa-regular fa-pen-to-square logOff"></i
+            ><span class="modif logOff">Modifier</span></span
+          >
         </h2>
         <div class="gallery"></div>
       </section>

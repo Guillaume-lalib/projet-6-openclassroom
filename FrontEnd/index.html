@@ -59,11 +59,11 @@
             de la conception à la livraison finale du chantier.
           </p>
           <p>
-            Chaque projet sera étudié en commun, de façon à mettre en valeur les
-            volumes, les matières et les couleurs dans le respect de l’esprit
-            des lieux et le choix adapté des matériaux. Le suivi du chantier
-            sera assuré dans le souci du détail, le respect du planning et du
-            budget.
+            Chaque projet sera étudié en commun, cd backendde façon à mettre en
+            valeur les volumes, les matières et les couleurs dans le respect de
+            l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+            chantier sera assuré dans le souci du détail, le respect du planning
+            et du budget.
           </p>
           <p>
             En cas de besoin, une équipe pluridisciplinaire peut-être constituée
@@ -108,6 +108,28 @@
         </ul>
       </nav>
     </footer>
+    <div id="section-modal">
+      <div class="modal">
+        <div class="close-back">
+          <i class="fa-solid fa-arrow-left-long"></i>
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+        <h3 class="change-title">Galerie photo</h3>
+        <div class="modal-galery line-down"></div>
+        <form action="" class="line-down form-add">
+          <label for="title_input">Titre</label>
+          <input type="text" name="title" id="title_input" />
+          <label for="category_input">Catégorie</label>
+          <select name="category" id="category_input">
+            <option value="1">Objets</option>
+            <option value="2">Appartements</option>
+            <option value="3">Hotels & restaurants</option>
+          </select>
+        </form>
+        <input class="add-image" type="submit" value="Ajouter une photo" />
+        <div class="delete-galery">Supprimer la galerie</div>
+      </div>
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>

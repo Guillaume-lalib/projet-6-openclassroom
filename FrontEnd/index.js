@@ -84,3 +84,36 @@ logOut.addEventListener("click", () => {
   localStorage.clear();
   window.location.reload();
 });
+//------------------open - close modal------------------//
+const openModal = async () => {
+  const open = document.querySelectorAll(".modif");
+  const modal = document.getElementById("section-modal");
+  const close = document.querySelector(".fa-xmark");
+  open.forEach((classOpen) => {
+    classOpen.addEventListener("click", function () {
+      modal.style.display = "flex";
+    });
+    close.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+    // modal.addEventListener("click", function () {
+    //   modal.style.display = "none";
+    // });
+  });
+};
+openModal();
+//------------------add modal------------------//
+const addModal = document.querySelector(".add-image");
+const deleteAll = document.querySelector(".delete-galery");
+const title = document.querySelector(".change-title");
+const back = document.querySelector(".fa-arrow-left-long");
+const deleteGallery = document.querySelector(".modal-galery");
+const formAdd = document.querySelector(".form-add");
+
+addModal.addEventListener("click", () => {
+  deleteGallery.style.display = "none";
+  deleteAll.style.display = "none";
+  title.innerHTML = `Ajout photo`;
+  back.style.visibility = "visible";
+  formAdd.style.display = "flex";
+});

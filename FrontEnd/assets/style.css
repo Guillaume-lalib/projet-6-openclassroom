@@ -211,7 +211,7 @@ li:hover {
 #introduction p {
   margin-bottom: 0.5em;
 }
-#portfolio h2{
+#portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
 }
@@ -227,10 +227,12 @@ li:hover {
   width: 100%;
 }
 #contact,
-#login {
+#login,
+#section-modal {
   width: 50%;
   margin: auto;
 }
+#section-modal > *,
 #contact > *,
 #login > * {
   text-align: center;
@@ -239,6 +241,7 @@ li:hover {
 #login h2 {
   margin-bottom: 20px;
 }
+/* #section-modal form, */
 #contact form,
 #login form {
   text-align: left;
@@ -247,6 +250,8 @@ li:hover {
   flex-direction: column;
 }
 
+#section-modal input,
+#section-modal select,
 #contact input,
 #login input {
   height: 50px;
@@ -254,6 +259,7 @@ li:hover {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+#section-modal label,
 #contact label,
 #login label {
   margin: 2em 0 1em 0;
@@ -324,12 +330,12 @@ footer nav ul {
   cursor: pointer;
   font-weight: 300;
 }
-.allFilter{
-text-align: center;
-margin-top: 40px;
-margin-bottom: 40px;
+.allFilter {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
-.filter{
+.filter {
   cursor: pointer;
   padding: 8px 20px;
   color: #1d6154;
@@ -338,22 +344,76 @@ margin-bottom: 40px;
   background-color: rgb(255, 254, 248);
   border: 1px solid #1d6154;
   margin: 0px 5px;
-  transition: 0.4s
+  transition: 0.4s;
 }
-.filter:hover{
+.filter:hover {
   color: rgb(255, 254, 248);
   background-color: #1d6154;
 }
-.logOff{
+.logOff {
   display: none;
 }
-.figModif{
+.figModif {
   margin: 20px 0px 0px 60px;
 }
-#project span{
+#project span {
   margin-left: 30px;
 }
-#project span span{
+#project span span {
   margin: 0px;
   font-family: "Work Sans";
+}
+.modal {
+  background-color: white;
+  border-radius: 15px;
+  height: 730px;
+  width: 630px;
+  padding: 30px;
+  align-items: center;
+  text-align: center;
+}
+.close-back {
+  cursor: pointer;
+  display: flex;
+  font-size: 1.2em;
+  justify-content: space-between;
+}
+h3 {
+  font-size: 26px;
+  margin: 10px auto 50px;
+}
+.line-down {
+  border-bottom: 1px solid #b3b3b3;
+  margin: 0px 75px;
+}
+.delete-galery {
+  color: red;
+  cursor: pointer;
+}
+.add-image {
+  cursor: pointer;
+  padding: 8px 20px;
+  border: none;
+  font-size: 1em !important;
+}
+#section-modal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.295);
+}
+.fa-arrow-left-long {
+  visibility: hidden;
+}
+.form-add {
+  flex-direction: column;
+  display: none;
+  text-align: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  flex-direction: column;
 }

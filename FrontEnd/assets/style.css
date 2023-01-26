@@ -223,7 +223,7 @@ li:hover {
   grid-row-gap: 20px;
 }
 
-.gallery img {
+#portfolio img {
   width: 100%;
 }
 #contact,
@@ -366,14 +366,11 @@ footer nav ul {
 .modal {
   background-color: white;
   border-radius: 15px;
-  height: 730px;
   width: 630px;
   padding: 30px;
-  align-items: center;
   text-align: center;
 }
 .close-back {
-  cursor: pointer;
   display: flex;
   font-size: 1.2em;
   justify-content: space-between;
@@ -382,9 +379,9 @@ h3 {
   font-size: 26px;
   margin: 10px auto 50px;
 }
-.line-down {
-  border-bottom: 1px solid #b3b3b3;
-  margin: 0px 75px;
+.line-up {
+  border-top: 1px solid #b3b3b3;
+  margin: 75px 75px 0px;
 }
 .delete-galery {
   color: red;
@@ -400,20 +397,85 @@ h3 {
   display: none;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 200px;
+  position: fixed;
+  top: 0px;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.295);
 }
 .fa-arrow-left-long {
   visibility: hidden;
+  cursor: pointer;
+}
+.fa-xmark{
+  cursor: pointer;
 }
 .form-add {
   flex-direction: column;
   display: none;
   text-align: left;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 30px 60px;
   flex-direction: column;
+}
+.upload{
+  width: 100%;
+  height: 170px;
+  background-color: #e8f1f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  position: relative;
+}
+.fa-image{
+  font-size: 6em;
+}
+.input-add{
+  display: none;
+}
+.label-add{
+  font-size: 1.2em;
+  background-color: #cbd6dc;
+  padding: 8px 20px;
+  border: 1px solid #cbd6dc;
+  border-radius: 60px;
+  margin: 20px 0px !important;
+  color: #306685;
+  cursor: pointer;
+}
+.validate-image{
+  display: none;
+  cursor: pointer;
+}
+.modal-galery{
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 17px;
+  row-gap: 17px;
+  margin: 0px 75px;
+}
+#section-modal img{
+  max-height: 110px;
+}
+#section-modal figcaption{
+  text-align: left;
+  cursor: pointer;
+}
+.delete{
+  background-color: black;
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  position: relative;
+  bottom: 99px;
+  left: 68px;
+  margin: -8px;
+}
+.fa-trash-can{
+  color: white;
+  cursor: pointer;
+  font-size: 0.7em;
 }

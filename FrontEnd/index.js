@@ -43,7 +43,8 @@ const createFilter = (div, classAdd = [], content) => {
   });
 };
 const button = createFilter("button", ["filter"], "Tous");
-
+// voir avec filter
+//splice
 //------------------work returns------------------//
 
 const dataWorks = async () => {
@@ -56,6 +57,13 @@ const dataWorks = async () => {
     <figcaption>${image.title}</figcaption>
     </figure>`;
     gallery.innerHTML += template;
+    const modalImg = `<figure class="imageCard" data-category="${image.categoryId}">
+    <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />          <div class="delete">
+            <i class="fa-regular fa-trash-can"></i>
+          </div>
+    <figcaption>éditer</figcaption>
+    </figure>`;
+    modalGallery.innerHTML += modalImg;
   });
 };
 dataWorks();
@@ -78,13 +86,17 @@ const userEdition = async () => {
   }
 };
 userEdition();
+
 //------------------log out------------------//
+
 logOut.addEventListener("click", () => {
   localStorage.setItem("id", "token");
   localStorage.clear();
   window.location.reload();
 });
+
 //------------------open - close modal------------------//
+
 const openModal = async () => {
   const open = document.querySelectorAll(".modif");
   const modal = document.getElementById("section-modal");
@@ -96,24 +108,38 @@ const openModal = async () => {
     close.addEventListener("click", function () {
       modal.style.display = "none";
     });
-    // modal.addEventListener("click", function () {
-    //   modal.style.display = "none";
-    // });
   });
 };
 openModal();
-//------------------add modal------------------//
+
+//------------------modal style------------------//
+
 const addModal = document.querySelector(".add-image");
 const deleteAll = document.querySelector(".delete-galery");
 const title = document.querySelector(".change-title");
 const back = document.querySelector(".fa-arrow-left-long");
-const deleteGallery = document.querySelector(".modal-galery");
+const modalGallery = document.querySelector(".modal-galery");
 const formAdd = document.querySelector(".form-add");
-
-addModal.addEventListener("click", () => {
-  deleteGallery.style.display = "none";
+const validateImg = document.querySelector(".validate-image");
+function modal() {
+  modalGallery.style.display = "none";
   deleteAll.style.display = "none";
   title.innerHTML = `Ajout photo`;
   back.style.visibility = "visible";
   formAdd.style.display = "flex";
+  addModal.style.display = "none";
+  validateImg.style.display = "block";
+}
+addModal.addEventListener("click", modal);
+
+back.addEventListener("click", () => {
+  addModal.style.display = "block";
+  formAdd.style.display = "none";
+  title.innerHTML = `Galerie photo`;
+  modalGallery.style.display = "flex";
+  deleteAll.style.display = "block";
+  back.style.visibility = "hidden";
+  validateImg.style.display = "none";
 });
+
+//------------------add modal------------------//

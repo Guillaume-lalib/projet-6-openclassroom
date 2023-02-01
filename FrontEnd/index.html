@@ -22,7 +22,9 @@
   </head>
   <body>
     <div class="edition logOff">
-      <i class="fa-regular fa-pen-to-square lofOff"></i> Mode édition<button>
+      <i class="fa-regular fa-pen-to-square lofOff"></i> Mode édition<button
+        id="refresh"
+      >
         Publier les changements
       </button>
     </div>
@@ -116,32 +118,35 @@
         </div>
         <h3 class="change-title">Galerie photo</h3>
         <div class="modal-galery"></div>
-        <form action="post" class="form-add">
+        <form method="POST" class="form-add">
           <div class="upload">
-            <div class="image_display"></div>
+            <div class="preview"></div>
             <i class="fa-regular fa-image"></i>
             <label class="label-add" for="add-image">+ Ajouter photo</label>
             <input
               class="input-add"
               type="file"
               id="add-image"
-              name="image"
+              name="file"
               accept="image/png, image/jpeg"
+              onchange="previewImage()"
             />
             <p>jpg, png : 4mo max</p>
           </div>
           <label for="title_input">Titre</label>
-          <input type="text" name="title" id="title_input" />
+          <input type="text" name="title" id="add-title" />
           <label for="category_input">Catégorie</label>
-          <select name="category" id="category_input">
+          <select name="category" id="add-category">
             <option value="1">Objets</option>
             <option value="2">Appartements</option>
             <option value="3">Hotels & restaurants</option>
           </select>
+          <div class="line">
+            <input class="validate-image" type="submit" value="Valider" />
+          </div>
         </form>
         <div class="line-up">
           <input class="add-image" type="submit" value="Ajouter une photo" />
-          <input class="validate-image" type="submit" value="Valider" />
         </div>
         <div class="delete-galery">Supprimer la galerie</div>
       </div>

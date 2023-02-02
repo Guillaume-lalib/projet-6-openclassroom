@@ -154,23 +154,28 @@ back.addEventListener("click", () => {
 });
 
 const formModal = document.getElementById("section-modal");
-const previewImg = formModal.querySelector(".preview");
 const modalTitle = formModal.querySelector("#add-title");
 const modalImage = formModal.querySelector("#add-image");
 const modalCategory = formModal.querySelector("#add-category");
 const categoryCheck = modalCategory.querySelector("option:checked");
 const formValid = document.querySelector(".validate-image");
+const previewImg = formAdd.querySelector(".upload");
+console.log(modalImage);
 
-function previewImage() {
-  var file = modalImage;
-  if (file.lenght > 0) {
-    var fileReader = new FileReader();
-    fileReader.onload = function (event) {
-      previewImg.setAttribute("src", event.target.result);
-    };
-    fileReader.readAsDataURL(file[0]);
+function updateImageDisplay() {
+  while (previewImg.firstChild) {
+    previewImg.removeChild(previewImg.firstChild);
+  }
+  var curFiles = modalImage.files;
+  for (var i = 0; i < curFiles.length; i++) {
+    var image = document.createElement("img");
+    image.src = window.URL.createObjectURL(curFiles[i]);
+    console.log(image.src);
+    previewImg.appendChild(image);
+    image.classList.add("image-preview");
   }
 }
+modalImage.addEventListener("change", updateImageDisplay);
 
 // const validateBtn = () => {
 //   if (
@@ -189,7 +194,7 @@ function previewImage() {
 formAdd.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = new FormData();
-  data.append("imageUrl", modalImage.files[0]);
+  data.append("imageUrl", modalImage.files);
   data.append("title", modalTitle.value);
   data.append("category", formValid.value);
   fetch(`http://localhost:5678/api/works`, {
@@ -215,16 +220,16 @@ formAdd.addEventListener("submit", (e) => {
 });
 
 //------------------delete modal------------------//
-const testID = async () => {
-  const urlWorks = `http://localhost:5678/api/works/`;
-  const resWorks = await fetch(urlWorks);
-  const dataWorks = await resWorks.json();
-  const deleteBtn = document.querySelectorAll(".delete");
-  console.log(deleteBtn);
-  for (let i = 0; i < dataWorks.length; i++) console.log(dataWorks[i].id);
-  console.log(dataWorks);
-};
-testID();
+// const testID = async () => {
+//   const urlWorks = `http://localhost:5678/api/works/`;
+//   const resWorks = await fetch(urlWorks);
+//   const dataWorks = await resWorks.json();
+//   const deleteBtn = document.querySelectorAll(".delete");
+//   console.log(deleteBtn);
+//   for (let i = 0; i < dataWorks.length; i++) console.log(dataWorks[i].id);
+//   console.log(dataWorks);
+// };
+// testID();
 // const testApi = async () => {
 //   const urlWorks = `http://localhost:5678/api/works`;
 //   const resWorks = await fetch(urlWorks);

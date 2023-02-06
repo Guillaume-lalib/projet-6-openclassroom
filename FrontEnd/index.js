@@ -20,6 +20,7 @@ const dataFilter = async () => {
   const urlFilter = `http://localhost:5678/api/categories`;
   const resFilter = await fetch(urlFilter);
   const dataFilter = await resFilter.json();
+  const button = createFilter("button", ["filter"], "Tous");
   dataFilter.forEach((category) => {
     createFilter("button", ["filter"], category.name);
   });
@@ -47,7 +48,6 @@ const createFilter = (div, classAdd = [], content) => {
     });
   });
 };
-const button = createFilter("button", ["filter"], "Tous");
 // voir avec filter
 //splice
 //------------------work returns------------------//
@@ -56,6 +56,7 @@ const dataWorks = async () => {
   const urlWorks = `http://localhost:5678/api/works`;
   const resWorks = await fetch(urlWorks);
   const dataWorks = await resWorks.json();
+  console.log(dataWorks);
   dataWorks.forEach((image) => {
     const template = `<figure class="imageCard" data-category="${image.categoryId}">
     <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />
@@ -63,10 +64,8 @@ const dataWorks = async () => {
     </figure>`;
     gallery.innerHTML += template;
     const modalImg = `<figure class="imageCard" data-category="${image.categoryId}">
-    <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />  <div class="delete">
-            <i class="fa-regular fa-trash-can"></i>
-          </div>
-    <figcaption>éditer</figcaption>
+    <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />  
+    <figcaption>éditer <i class="fa-regular fa-trash-can"></i></figcaption>
     </figure>`;
     modalGallery.innerHTML += modalImg;
   });
@@ -111,7 +110,12 @@ const openModal = async () => {
       modal.style.display = "flex";
     });
     close.addEventListener("click", function () {
+      const imageUpload = formAdd.querySelector(".image-preview");
       modal.style.display = "none";
+      logoSup.style.display = "flex";
+      addPreview.style.display = "flex";
+      backModal();
+      if (imageUpload) imageUpload.remove();
     });
   });
   window.onclick = function (event) {
@@ -143,7 +147,8 @@ addModal.addEventListener("click", () => {
   addModal.style.display = "none";
   validateImg.style.display = "block";
 });
-back.addEventListener("click", () => {
+
+function backModal() {
   addModal.style.display = "block";
   formAdd.style.display = "none";
   title.innerHTML = `Galerie photo`;
@@ -151,7 +156,8 @@ back.addEventListener("click", () => {
   deleteAll.style.display = "block";
   back.style.visibility = "hidden";
   validateImg.style.display = "none";
-});
+}
+back.addEventListener("click", backModal);
 
 const formModal = document.getElementById("section-modal");
 const modalTitle = formModal.querySelector("#add-title");
@@ -160,98 +166,67 @@ const modalCategory = formModal.querySelector("#add-category");
 const categoryCheck = modalCategory.querySelector("option:checked");
 const formValid = document.querySelector(".validate-image");
 const previewImg = formAdd.querySelector(".upload");
-console.log(modalImage);
+const logoSup = formAdd.querySelector(".fa-image");
 
 function updateImageDisplay() {
-  while (previewImg.firstChild) {
-    previewImg.removeChild(previewImg.firstChild);
-  }
+  logoSup.style.display = "none";
+  addPreview.style.display = "none";
   var curFiles = modalImage.files;
   for (var i = 0; i < curFiles.length; i++) {
     var image = document.createElement("img");
     image.src = window.URL.createObjectURL(curFiles[i]);
-    console.log(image.src);
     previewImg.appendChild(image);
     image.classList.add("image-preview");
   }
 }
 modalImage.addEventListener("change", updateImageDisplay);
 
-// const validateBtn = () => {
-//   if (
-//     !modalImage.value == null ||
-//     !modalTitle.value == 0 ||
-//     !modalTitle.value == null
-//   ) {
-//     formValid.style.background = "#1D6154";
-//   } else {
-//     formValid.style.background = "#A7A7A7";
-//   }
-// };
-// validateBtn();
+const validateBtn = () => {
+  if (
+    modalImage.value.lenght > 0 &&
+    modalCategory.value.lenght > 0 &&
+    modalTitle.value.lenght > 0
+  ) {
+    formValid.style.background = "#1D6154";
+  } else {
+    formValid.style.background = "#A7A7A7";
+  }
+};
+validateBtn();
 
 //------------------add modal------------------//
+modalImage.addEventListener("change", function () {
+  console.log(modalImage.files[0]);
+});
 formAdd.addEventListener("submit", (e) => {
   e.preventDefault();
-  const data = new FormData();
-  data.append("imageUrl", modalImage.files);
-  data.append("title", modalTitle.value);
-  data.append("category", formValid.value);
+  const data = {
+    image: modalImage.files[0],
+    title: modalTitle.value,
+    category: modalCategory.value,
+  };
+  console.log(data);
   fetch(`http://localhost:5678/api/works`, {
     method: "POST",
     headers: {
-      "content-type": "application/json",
-      Authorization: "Bearer " + localStorage.token,
       accept: "application/json",
-      // "content-type": "multipart/form-data",
+      Authorization: "Bearer" + localStorage.token,
+      "content-type": " multipart/form-data",
     },
     body: data,
-  })
-    .then(() => {
-      fetch(`http://localhost:5678/api/works`).then((value) => {
-        if (value.ok) {
-          return value.json();
-        }
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  });
 });
 
 //------------------delete modal------------------//
-// const testID = async () => {
-//   const urlWorks = `http://localhost:5678/api/works/`;
-//   const resWorks = await fetch(urlWorks);
-//   const dataWorks = await resWorks.json();
-//   const deleteBtn = document.querySelectorAll(".delete");
-//   console.log(deleteBtn);
-//   for (let i = 0; i < dataWorks.length; i++) console.log(dataWorks[i].id);
-//   console.log(dataWorks);
-// };
-// testID();
-// const testApi = async () => {
-//   const urlWorks = `http://localhost:5678/api/works`;
-//   const resWorks = await fetch(urlWorks);
-//   const data = await resWorks.json();
-//   for (let i = 0; i < data.length; i++) console.log(data[i].id);
-//   const deleteBtn = document
-//     .querySelectorAll(".delete")
-//     .getAttribute("data[i].id");
-//   // var deleteID = deleteBtn.getAttribute("data[i].id");
-//   console.log(deleteBtn);
-//   // console.log(deleteID);
-// };
-// testApi();
 
-// const Delete = async (id) => {
-//   fetch("http://localhost:5678/api/works" + id, {
-//     method: "DELETE",
-//     headers: {
-//       "content-type": "application/json",
-//       Authorization: "Bearer " + localStorage.token,
-//     },
-//   });
-//   modalDelete();
-// };
-// function modalDelete() {}
+modalGallery.addEventListener("click", (e) => {
+  console.log(e.target.parentElement);
+  const imageCard = formAdd.querySelectorAll(".imageCard");
+  const index = imageCard.dataset.id;
+  console.log(index);
+  if (e.target.className === "btn-delete") {
+    const indexCard = parseInt(e.target.parentElement.getAttribute("index"));
+    const modalCard = e.target.parentElement;
+    deleteData(modalCard, indexCard);
+  }
+});

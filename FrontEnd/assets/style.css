@@ -466,26 +466,18 @@ h3 {
   text-align: left;
   cursor: pointer;
 }
-.delete{
-  background-color: black;
-  width: 17px;
-  height: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-  position: relative;
-  bottom: 99px;
-  left: 68px;
-  margin: -8px;
-}
 .fa-trash-can{
-  color: white;
-  cursor: pointer;
-  font-size: 0.7em;
+  background-color: black;
+    padding: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8em;
+    position: relative;
+    right: -15px;
+    bottom: 106px;
 }
 .image-preview{
   min-height: 210px;
   position: relative;
-  bottom: 20px;
+  bottom: 34px;
 }

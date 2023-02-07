@@ -203,18 +203,16 @@ validateBtn();
 //------------------add modal------------------//
 formAdd.addEventListener("submit", (e) => {
   e.preventDefault();
-  const data = {
-    image: modalImage.files[0],
-    title: modalTitle.value,
-    category: modalCategory.value,
-  };
+  let data = new FormData();
+  data.append("image", modalImage.files[0]);
+  data.append("title", modalTitle.value);
+  data.append("category", modalCategory.value);
   console.log(data);
   fetch(`http://localhost:5678/api/works`, {
     method: "POST",
     headers: {
-      // accept: "application/json",
+      accept: "application/json",
       Authorization: `Bearer ${token}`,
-      // "content-type": " multipart/form-data",
     },
     body: data,
   });
@@ -238,6 +236,4 @@ modalGallery.addEventListener("click", function (e) {
   }
   confirmer();
 });
-deleteAll.addEventListener("click", function () {
-  deleteIMG.forEach;
-});
+deleteAll.addEventListener("click", function () {});

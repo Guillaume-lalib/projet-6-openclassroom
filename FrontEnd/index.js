@@ -1,3 +1,4 @@
+let token = localStorage.getItem("token");
 //------------------send confirm------------------//
 
 const validate = document.getElementById("sendMessage");
@@ -6,7 +7,8 @@ validate.addEventListener("click", () => alert("Message envoyer"));
 const refresh = document.getElementById("refresh");
 refresh.addEventListener("click", () => {
   gallery.innerHTML = "";
-  window.location.reload();
+  modalGallery.innerHTML = "";
+  dataWorks();
 });
 //------------------filtre + sort------------------//
 
@@ -56,7 +58,6 @@ const dataWorks = async () => {
   const urlWorks = `http://localhost:5678/api/works`;
   const resWorks = await fetch(urlWorks);
   const dataWorks = await resWorks.json();
-  console.log(dataWorks);
   dataWorks.forEach((image) => {
     const template = `<figure class="imageCard" data-category="${image.categoryId}">
     <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />
@@ -65,7 +66,7 @@ const dataWorks = async () => {
     gallery.innerHTML += template;
     const modalImg = `<figure class="imageCard" data-category="${image.categoryId}">
     <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />  
-    <figcaption>éditer <i class="fa-regular fa-trash-can"></i></figcaption>
+    <figcaption>éditer <i id="${image.id}" class="fa-regular fa-trash-can"></i></figcaption>
     </figure>`;
     modalGallery.innerHTML += modalImg;
   });
@@ -100,7 +101,7 @@ logOut.addEventListener("click", () => {
 });
 
 //------------------open - close modal------------------//
-
+function backmodal() {}
 const openModal = async () => {
   const open = document.querySelectorAll(".modif");
   const modal = document.getElementById("section-modal");
@@ -120,7 +121,12 @@ const openModal = async () => {
   });
   window.onclick = function (event) {
     if (event.target == modal) {
+      const imageUpload = formAdd.querySelector(".image-preview");
       modal.style.display = "none";
+      logoSup.style.display = "flex";
+      addPreview.style.display = "flex";
+      backModal();
+      if (imageUpload) imageUpload.remove();
     }
   };
 };
@@ -195,9 +201,6 @@ const validateBtn = () => {
 validateBtn();
 
 //------------------add modal------------------//
-modalImage.addEventListener("change", function () {
-  console.log(modalImage.files[0]);
-});
 formAdd.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = {
@@ -209,24 +212,32 @@ formAdd.addEventListener("submit", (e) => {
   fetch(`http://localhost:5678/api/works`, {
     method: "POST",
     headers: {
-      accept: "application/json",
-      Authorization: "Bearer" + localStorage.token,
-      "content-type": " multipart/form-data",
+      // accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      // "content-type": " multipart/form-data",
     },
     body: data,
   });
 });
 
 //------------------delete modal------------------//
-
-modalGallery.addEventListener("click", (e) => {
-  console.log(e.target.parentElement);
-  const imageCard = formAdd.querySelectorAll(".imageCard");
-  const index = imageCard.dataset.id;
-  console.log(index);
-  if (e.target.className === "btn-delete") {
-    const indexCard = parseInt(e.target.parentElement.getAttribute("index"));
-    const modalCard = e.target.parentElement;
-    deleteData(modalCard, indexCard);
+const imageID = formAdd.querySelector(".imageCard");
+const deleteIMG = formAdd.querySelectorAll(".fa-trash-can");
+modalGallery.addEventListener("click", function (e) {
+  function confirmer() {
+    var res = confirm("etes-vous de vouloir supprimer ?");
+    if (res) {
+      fetch("http://localhost:5678/api/works/" + e.target.id, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          accept: "*/*",
+        },
+      });
+    }
   }
+  confirmer();
+});
+deleteAll.addEventListener("click", function () {
+  deleteIMG.forEach;
 });

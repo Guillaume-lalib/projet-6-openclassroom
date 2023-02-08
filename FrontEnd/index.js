@@ -101,7 +101,6 @@ logOut.addEventListener("click", () => {
 });
 
 //------------------open - close modal------------------//
-function backmodal() {}
 const openModal = async () => {
   const open = document.querySelectorAll(".modif");
   const modal = document.getElementById("section-modal");
@@ -187,18 +186,14 @@ function updateImageDisplay() {
 }
 modalImage.addEventListener("change", updateImageDisplay);
 
-const validateBtn = () => {
-  if (
-    modalImage.value.lenght > 0 &&
-    modalCategory.value.lenght > 0 &&
-    modalTitle.value.lenght > 0
-  ) {
+function validateBtn() {
+  if (modalImage.value == null && modalTitle.value == null) {
     formValid.style.background = "#1D6154";
-  } else {
-    formValid.style.background = "#A7A7A7";
   }
-};
-validateBtn();
+}
+
+modalTitle.addEventListener("change", validateBtn);
+modalImage.addEventListener("change", validateBtn);
 
 //------------------add modal------------------//
 formAdd.addEventListener("submit", (e) => {
@@ -207,6 +202,9 @@ formAdd.addEventListener("submit", (e) => {
   data.append("image", modalImage.files[0]);
   data.append("title", modalTitle.value);
   data.append("category", modalCategory.value);
+  if (!modalImage.value && !modalImage.value) {
+    alert("Veuillez remplir tout le formulaire");
+  }
   console.log(data);
   fetch(`http://localhost:5678/api/works`, {
     method: "POST",
@@ -219,9 +217,12 @@ formAdd.addEventListener("submit", (e) => {
 });
 
 //------------------delete modal------------------//
-const imageID = formAdd.querySelector(".imageCard");
 const deleteIMG = formAdd.querySelectorAll(".fa-trash-can");
+deleteIMG.forEach((e) => {
+  for (var i = 0; i < modalGallery.length; i++) console.log(deleteIMG[i].id);
+});
 modalGallery.addEventListener("click", function (e) {
+  console.log(e.target.id);
   function confirmer() {
     var res = confirm("etes-vous de vouloir supprimer ?");
     if (res) {
@@ -236,4 +237,27 @@ modalGallery.addEventListener("click", function (e) {
   }
   confirmer();
 });
-deleteAll.addEventListener("click", function () {});
+
+const allDelete = async () => {
+  const urlWorks = `http://localhost:5678/api/works`;
+  const resWorks = await fetch(urlWorks);
+  const dataWorks = await resWorks.json();
+  for (var i = 0; i < dataWorks.length; i++) console.log(dataWorks[i].id);
+
+  function confirmerAll() {
+    var res = confirm("etes-vous de vouloir supprimer toute la galerie ?");
+    if (res) {
+      fetch("http://localhost:5678/api/works/" + allID, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          accept: "*/*",
+        },
+      });
+    }
+  }
+  // allDelete();
+  confirmerAll();
+};
+
+deleteAll.addEventListener("click", allDelete);

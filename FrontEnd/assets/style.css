@@ -449,6 +449,7 @@ h3 {
   cursor: pointer;
 }
 .validate-image{
+  /* background-color: #A7A7A7 !important; */
   display: none;
   cursor: pointer;
 }

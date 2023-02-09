@@ -4,12 +4,12 @@ let token = localStorage.getItem("token");
 const validate = document.getElementById("sendMessage");
 validate.addEventListener("click", () => alert("Message envoyer"));
 
-const refresh = document.getElementById("refresh");
-refresh.addEventListener("click", () => {
-  gallery.innerHTML = "";
-  modalGallery.innerHTML = "";
-  dataWorks();
-});
+// const refresh = document.getElementById("refresh");
+// refresh.addEventListener("click", () => {
+//   gallery.innerHTML = "";
+//   modalGallery.innerHTML = "";
+//   dataWorks();
+// });
 //------------------filtre + sort------------------//
 
 const portfolio = document.querySelector("#portfolio");
@@ -109,18 +109,18 @@ const openModal = async () => {
     classOpen.addEventListener("click", function () {
       modal.style.display = "flex";
     });
-    close.addEventListener("click", function () {
-      const imageUpload = formAdd.querySelector(".image-preview");
-      modal.style.display = "none";
-      logoSup.style.display = "flex";
-      addPreview.style.display = "flex";
-      backModal();
-      if (imageUpload) imageUpload.remove();
-    });
+  });
+  close.addEventListener("click", function () {
+    const imageUpload = formAdd.querySelector(".image-preview");
+    modal.style.display = "none";
+    logoSup.style.display = "flex";
+    addPreview.style.display = "flex";
+    backModal();
+    if (imageUpload) imageUpload.remove();
   });
   window.onclick = function (event) {
+    const imageUpload = formAdd.querySelector(".image-preview");
     if (event.target == modal) {
-      const imageUpload = formAdd.querySelector(".image-preview");
       modal.style.display = "none";
       logoSup.style.display = "flex";
       addPreview.style.display = "flex";
@@ -217,10 +217,10 @@ formAdd.addEventListener("submit", (e) => {
 });
 
 //------------------delete modal------------------//
-const deleteIMG = formAdd.querySelectorAll(".fa-trash-can");
-deleteIMG.forEach((e) => {
-  for (var i = 0; i < modalGallery.length; i++) console.log(deleteIMG[i].id);
-});
+// const deleteIMG = formAdd.querySelectorAll(".fa-trash-can");
+// deleteIMG.forEach((e) => {
+//   for (var i = 0; i < modalGallery.length; i++) console.log(deleteIMG[i].id);
+// });
 modalGallery.addEventListener("click", function (e) {
   console.log(e.target.id);
   function confirmer() {
@@ -242,21 +242,25 @@ const allDelete = async () => {
   const urlWorks = `http://localhost:5678/api/works`;
   const resWorks = await fetch(urlWorks);
   const dataWorks = await resWorks.json();
-  for (var i = 0; i < dataWorks.length; i++) console.log(dataWorks[i].id);
-
+  for (var i = 0; i < dataWorks.length; i++)
+    //  console.log(dataWorks[i].id);
+    allID = dataWorks[i].id;
+  console.log(allID);
   function confirmerAll() {
     var res = confirm("etes-vous de vouloir supprimer toute la galerie ?");
     if (res) {
-      fetch("http://localhost:5678/api/works/" + allID, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: "*/*",
-        },
-      });
+      function deleteIDall() {
+        fetch("http://localhost:5678/api/works/" + allID, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            accept: "*/*",
+          },
+        });
+      }
     }
+    deleteIDall() * 10;
   }
-  // allDelete();
   confirmerAll();
 };
 

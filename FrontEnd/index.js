@@ -257,9 +257,6 @@ const allDelete = async () => {
   const dataWorks = await resWorks.json();
   for (var i = 0; i < dataWorks.length; i++) {
     const allID = dataWorks[i].id;
-
-    // console.log(dataWorks[i].id);
-    // console.log(dataWorks.length);
     console.log(allID);
     await fetch("http://localhost:5678/api/works/" + allID, {
       method: "DELETE",

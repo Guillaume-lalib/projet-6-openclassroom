@@ -4,12 +4,6 @@ let token = localStorage.getItem("token");
 const validate = document.getElementById("sendMessage");
 validate.addEventListener("click", () => alert("Message envoyer"));
 
-// const refresh = document.getElementById("refresh");
-// refresh.addEventListener("click", () => {
-//   gallery.innerHTML = "";
-//   modalGallery.innerHTML = "";
-//   dataWorks();
-// });
 //------------------filtre + sort------------------//
 
 const portfolio = document.querySelector("#portfolio");
@@ -50,8 +44,7 @@ const createFilter = (div, classAdd = [], content) => {
     });
   });
 };
-// voir avec filter
-//splice
+
 //------------------work returns------------------//
 
 const dataWorks = async () => {
@@ -66,7 +59,10 @@ const dataWorks = async () => {
     gallery.innerHTML += template;
     const modalImg = `<figure class="imageCard" data-category="${image.categoryId}">
     <img crossorigin="anonymous" src="${image.imageUrl}" alt="${image.title}" />  
-    <figcaption>éditer <i id="${image.id}" class="fa-regular fa-trash-can"></i></figcaption>
+    <figcaption>éditer 
+    <i id="${image.id}" class="fa-regular fa-trash-can"></i>
+    <i class="fa-solid fa-arrows-up-down-left-right hidden"></i>
+    </figcaption>
     </figure>`;
     modalGallery.innerHTML += modalImg;
   });
@@ -115,6 +111,7 @@ const openModal = async () => {
     modal.style.display = "none";
     logoSup.style.display = "flex";
     addPreview.style.display = "flex";
+    formAdd.reset();
     backModal();
     if (imageUpload) imageUpload.remove();
   });
@@ -124,6 +121,7 @@ const openModal = async () => {
       modal.style.display = "none";
       logoSup.style.display = "flex";
       addPreview.style.display = "flex";
+      formAdd.reset();
       backModal();
       if (imageUpload) imageUpload.remove();
     }
@@ -140,8 +138,19 @@ const back = document.querySelector(".fa-arrow-left-long");
 const modalGallery = document.querySelector(".modal-galery");
 const formAdd = document.querySelector(".form-add");
 const validateImg = document.querySelector(".validate-image");
-
 const addPreview = formAdd.querySelector(".label-add");
+const arrowsVisi = document.querySelectorAll(".modal-galery > .imageCard");
+const arrow = document.querySelectorAll(".fa-arrows-up-down-left-right");
+
+arrowsVisi.forEach((e) => {
+  e.addEventListener("mouseover", () => {
+    console.log(ok);
+    arrow.classList.revove("hidden");
+  });
+  e.addEventListener("mousleave", () => {
+    arrow.classList.add("hidden");
+  });
+});
 
 addModal.addEventListener("click", () => {
   modalGallery.style.display = "none";
@@ -168,7 +177,6 @@ const formModal = document.getElementById("section-modal");
 const modalTitle = formModal.querySelector("#add-title");
 const modalImage = formModal.querySelector("#add-image");
 const modalCategory = formModal.querySelector("#add-category");
-const categoryCheck = modalCategory.querySelector("option:checked");
 const formValid = document.querySelector(".validate-image");
 const previewImg = formAdd.querySelector(".upload");
 const logoSup = formAdd.querySelector(".fa-image");
@@ -186,17 +194,26 @@ function updateImageDisplay() {
 }
 modalImage.addEventListener("change", updateImageDisplay);
 
-function validateBtn() {
-  if (modalImage.value == null && modalTitle.value == null) {
-    formValid.style.background = "#1D6154";
-  }
-}
-
-modalTitle.addEventListener("change", validateBtn);
-modalImage.addEventListener("change", validateBtn);
+const allInputs = document.querySelectorAll(
+  "#add-image, #add-title, #add-category"
+);
+allInputs.forEach((input) => {
+  input.addEventListener("input", () => {
+    if (
+      allInputs[0].value.length > 0 &&
+      allInputs[1].value.length > 0 &&
+      allInputs[2].value.length > 0
+    ) {
+      formValid.classList.remove("validate-image");
+    } else {
+      formValid.classList.add("validate-image");
+    }
+  });
+});
 
 //------------------add modal------------------//
-formAdd.addEventListener("submit", (e) => {
+const btnValid = document.querySelector(".btnValidate");
+btnValid.addEventListener("click", async function (e) {
   e.preventDefault();
   let data = new FormData();
   data.append("image", modalImage.files[0]);
@@ -205,8 +222,7 @@ formAdd.addEventListener("submit", (e) => {
   if (!modalImage.value && !modalImage.value) {
     alert("Veuillez remplir tout le formulaire");
   }
-  console.log(data);
-  fetch(`http://localhost:5678/api/works`, {
+  await fetch(`http://localhost:5678/api/works`, {
     method: "POST",
     headers: {
       accept: "application/json",
@@ -217,14 +233,11 @@ formAdd.addEventListener("submit", (e) => {
 });
 
 //------------------delete modal------------------//
-// const deleteIMG = formAdd.querySelectorAll(".fa-trash-can");
-// deleteIMG.forEach((e) => {
-//   for (var i = 0; i < modalGallery.length; i++) console.log(deleteIMG[i].id);
-// });
+
 modalGallery.addEventListener("click", function (e) {
   console.log(e.target.id);
   function confirmer() {
-    var res = confirm("etes-vous de vouloir supprimer ?");
+    var res = confirm("Etes-vous de vouloir supprimer l'image ?");
     if (res) {
       fetch("http://localhost:5678/api/works/" + e.target.id, {
         method: "DELETE",
@@ -242,26 +255,20 @@ const allDelete = async () => {
   const urlWorks = `http://localhost:5678/api/works`;
   const resWorks = await fetch(urlWorks);
   const dataWorks = await resWorks.json();
-  for (var i = 0; i < dataWorks.length; i++)
-    //  console.log(dataWorks[i].id);
-    allID = dataWorks[i].id;
-  console.log(allID);
-  function confirmerAll() {
-    var res = confirm("etes-vous de vouloir supprimer toute la galerie ?");
-    if (res) {
-      function deleteIDall() {
-        fetch("http://localhost:5678/api/works/" + allID, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            accept: "*/*",
-          },
-        });
-      }
-    }
-    deleteIDall() * 10;
+  for (var i = 0; i < dataWorks.length; i++) {
+    const allID = dataWorks[i].id;
+
+    // console.log(dataWorks[i].id);
+    // console.log(dataWorks.length);
+    console.log(allID);
+    await fetch("http://localhost:5678/api/works/" + allID, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        accept: "*/*",
+      },
+    });
   }
-  confirmerAll();
 };
 
 deleteAll.addEventListener("click", allDelete);

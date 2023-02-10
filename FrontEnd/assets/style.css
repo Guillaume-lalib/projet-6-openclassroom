@@ -449,14 +449,14 @@ h3 {
   cursor: pointer;
 }
 .validate-image{
-  /* background-color: #A7A7A7 !important; */
+  background-color: #A7A7A7 !important;
   display: none;
   cursor: pointer;
 }
 .modal-galery{
   display: flex;
   flex-wrap: wrap;
-  column-gap: 17px;
+  column-gap: 11px;
   row-gap: 17px;
   margin: 0px 75px;
 }
@@ -474,11 +474,27 @@ h3 {
     cursor: pointer;
     font-size: 0.8em;
     position: relative;
-    right: -15px;
-    bottom: 106px;
-}
-.image-preview{
-  min-height: 210px;
-  position: relative;
-  bottom: 34px;
+    right: -17px;
+    bottom: 108px;
+    border-radius: 3px;
+  }
+  .image-preview{
+    min-height: 210px;
+    position: relative;
+    bottom: 34px;
+  }
+  .hidden{
+    visibility: hidden;
+    cursor: none;
+  }
+  .fa-arrows-up-down-left-right{
+    border-radius: 3px;
+    right: 28px;
+    bottom: 108px;
+    position: relative;
+    font-size: 0.8em;
+    background-color: black;
+    padding: 4px;
+    color: white;
+    cursor: pointer;
 }

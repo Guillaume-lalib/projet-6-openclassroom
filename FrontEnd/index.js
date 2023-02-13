@@ -69,14 +69,6 @@ const dataWorks = async () => {
 };
 dataWorks();
 
-const refresh = document.getElementById("refresh");
-function refreshPage() {
-  gallery.innerHTML = "";
-  modalGallery.innerHTML = "";
-  dataWorks();
-}
-refresh.addEventListener("click", refreshPage);
-
 //------------------amdmin connect------------------//
 
 const logOut = document.querySelector(".login");

@@ -69,6 +69,12 @@ const dataWorks = async () => {
 };
 dataWorks();
 
+const refresh = document.getElementById("refresh");
+refresh.addEventListener("click", () => {
+  gallery.innerHTML = "";
+  modalGallery.innerHTML = "";
+  dataWorks();
+});
 //------------------amdmin connect------------------//
 
 const logOut = document.querySelector(".login");
@@ -230,6 +236,7 @@ btnValid.addEventListener("click", async function (e) {
     },
     body: data,
   });
+  return false;
 });
 
 //------------------delete modal------------------//

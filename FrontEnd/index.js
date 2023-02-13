@@ -70,11 +70,13 @@ const dataWorks = async () => {
 dataWorks();
 
 const refresh = document.getElementById("refresh");
-refresh.addEventListener("click", () => {
+function refreshPage() {
   gallery.innerHTML = "";
   modalGallery.innerHTML = "";
   dataWorks();
-});
+}
+refresh.addEventListener("click", refreshPage);
+
 //------------------amdmin connect------------------//
 
 const logOut = document.querySelector(".login");
@@ -218,6 +220,7 @@ allInputs.forEach((input) => {
 });
 
 //------------------add modal------------------//
+
 const btnValid = document.querySelector(".btnValidate");
 btnValid.addEventListener("click", async function (e) {
   e.preventDefault();
@@ -227,22 +230,27 @@ btnValid.addEventListener("click", async function (e) {
   data.append("category", modalCategory.value);
   if (!modalImage.value && !modalImage.value) {
     alert("Veuillez remplir tout le formulaire");
+  } else {
+    alert("formulaire envoyé! actualiser la gallerie");
   }
-  await fetch(`http://localhost:5678/api/works`, {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: data,
+  refresh.addEventListener("click", () => {
+    gallery.innerHTML = "";
+    modalGallery.innerHTML = "";
+    fetch(`http://localhost:5678/api/works`, {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: data,
+    });
   });
-  return false;
+  dataWorks();
 });
 
 //------------------delete modal------------------//
 
 modalGallery.addEventListener("click", function (e) {
-  console.log(e.target.id);
   function confirmer() {
     var res = confirm("Etes-vous de vouloir supprimer l'image ?");
     if (res) {
@@ -275,4 +283,10 @@ const allDelete = async () => {
   }
 };
 
-deleteAll.addEventListener("click", allDelete);
+deleteAll.addEventListener("click", function confirmAll(e) {
+  var resAll = confirm("Etes-vous de vouloir supprimer la gallerie ?");
+  if (resAll) {
+    confirmAll();
+    allDelete();
+  }
+});

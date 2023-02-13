@@ -274,7 +274,9 @@ li:hover {
   text-align: center;
 }
 
-input[type="submit"] {
+input[type="submit"],
+input[type="button"]
+ {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -497,4 +499,7 @@ h3 {
     padding: 4px;
     color: white;
     cursor: pointer;
+}
+.btnValidate{
+  cursor: pointer;
 }

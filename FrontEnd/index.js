@@ -215,7 +215,8 @@ btnValid.addEventListener("click", async function (e) {
   } else {
     alert("formulaire envoyé! actualiser la gallerie");
   }
-  refresh.addEventListener("click", () => {
+  refresh.addEventListener("click", (e) => {
+    e.preventDefault();
     gallery.innerHTML = "";
     modalGallery.innerHTML = "";
     fetch(`http://localhost:5678/api/works`, {
@@ -226,8 +227,8 @@ btnValid.addEventListener("click", async function (e) {
       },
       body: data,
     });
+    dataWorks();
   });
-  dataWorks();
 });
 
 //------------------delete modal------------------//

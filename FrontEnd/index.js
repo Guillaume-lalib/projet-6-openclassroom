@@ -142,16 +142,6 @@ const addPreview = formAdd.querySelector(".label-add");
 const arrowsVisi = document.querySelectorAll(".modal-galery > .imageCard");
 const arrow = document.querySelectorAll(".fa-arrows-up-down-left-right");
 
-arrowsVisi.forEach((e) => {
-  e.addEventListener("mouseover", () => {
-    console.log(ok);
-    arrow.classList.revove("hidden");
-  });
-  e.addEventListener("mousleave", () => {
-    arrow.classList.add("hidden");
-  });
-});
-
 addModal.addEventListener("click", () => {
   modalGallery.style.display = "none";
   deleteAll.style.display = "none";
